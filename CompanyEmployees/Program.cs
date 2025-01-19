@@ -10,7 +10,8 @@ LogManager.Setup().LoadConfigurationFromFile(string.Concat(Directory.GetCurrentD
 builder.Services.ConfigurCors();
 builder.Services.ConfigureIISIntegration();
 builder.Services.ConfigureLoggerSevice();
-
+builder.Services.ConfigureRepositoryManager();
+builder.Services.ConfigureSqlContext(builder.Configuration);
 builder.Services.AddControllers();
 
 var app = builder.Build();
