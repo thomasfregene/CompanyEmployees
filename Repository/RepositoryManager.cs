@@ -1,14 +1,13 @@
 ﻿using Contracts;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Repository
 {
     public class RepositoryManager : IRepositoryManager
     {
+        /*
+         we are utilizing the 
+         Lazy class to ensure the lazy initialization of our services
+        */
         private readonly RepositoryContext _repositoryContext;
         private readonly Lazy<ICompanyRepository> _companyRepository;
         private readonly Lazy<IEmployeeRepository> _employeeRepository;

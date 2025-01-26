@@ -5,13 +5,21 @@ VisualStudioVersion = 17.9.34728.123
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CompanyEmployees", "CompanyEmployees\CompanyEmployees.csproj", "{FBF0CABD-23D9-4D35-9963-E8CD1B8DE46D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Contracts", "Contracts\Contracts.csproj", "{B137D132-292E-4C43-9338-9F19B9E9B426}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Contracts", "Contracts\Contracts.csproj", "{B137D132-292E-4C43-9338-9F19B9E9B426}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LoggerService", "LoggerService\LoggerService.csproj", "{572F74A2-8923-47F4-BAFD-01E0C6D7A6B6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LoggerService", "LoggerService\LoggerService.csproj", "{572F74A2-8923-47F4-BAFD-01E0C6D7A6B6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entities", "Entities\Entities.csproj", "{0638D548-C18C-499A-BADF-1701FFAD744E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Entities", "Entities\Entities.csproj", "{0638D548-C18C-499A-BADF-1701FFAD744E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Repository", "Repository\Repository.csproj", "{9F2A61D5-1957-4738-AD4F-ABD6875B1D0E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Repository", "Repository\Repository.csproj", "{9F2A61D5-1957-4738-AD4F-ABD6875B1D0E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CompanyEmployees.Presentation", "CompanyEmployees.Presentation\CompanyEmployees.Presentation.csproj", "{9898693F-5FB4-45FB-8EFD-F2A041A35C80}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Service", "Service\Service.csproj", "{C1CD62CB-1485-4D50-90EE-BF4BA65FF329}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Service.Contracts", "Service.Contracts\Service.Contracts.csproj", "{C8BAB5C0-02F3-447A-A665-421DC1976A49}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared", "Shared\Shared.csproj", "{236D2CCC-D5DB-4921-AD14-8607A9141459}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +47,22 @@ Global
 		{9F2A61D5-1957-4738-AD4F-ABD6875B1D0E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9F2A61D5-1957-4738-AD4F-ABD6875B1D0E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9F2A61D5-1957-4738-AD4F-ABD6875B1D0E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9898693F-5FB4-45FB-8EFD-F2A041A35C80}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9898693F-5FB4-45FB-8EFD-F2A041A35C80}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9898693F-5FB4-45FB-8EFD-F2A041A35C80}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9898693F-5FB4-45FB-8EFD-F2A041A35C80}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C1CD62CB-1485-4D50-90EE-BF4BA65FF329}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C1CD62CB-1485-4D50-90EE-BF4BA65FF329}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C1CD62CB-1485-4D50-90EE-BF4BA65FF329}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C1CD62CB-1485-4D50-90EE-BF4BA65FF329}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C8BAB5C0-02F3-447A-A665-421DC1976A49}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C8BAB5C0-02F3-447A-A665-421DC1976A49}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C8BAB5C0-02F3-447A-A665-421DC1976A49}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C8BAB5C0-02F3-447A-A665-421DC1976A49}.Release|Any CPU.Build.0 = Release|Any CPU
+		{236D2CCC-D5DB-4921-AD14-8607A9141459}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{236D2CCC-D5DB-4921-AD14-8607A9141459}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{236D2CCC-D5DB-4921-AD14-8607A9141459}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{236D2CCC-D5DB-4921-AD14-8607A9141459}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

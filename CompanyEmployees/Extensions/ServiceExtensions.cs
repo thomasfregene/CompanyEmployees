@@ -2,6 +2,7 @@
 using LoggerService;
 using Microsoft.EntityFrameworkCore;
 using Repository;
+using Service;
 
 namespace CompanyEmployees.Extensions
 {
@@ -27,7 +28,22 @@ namespace CompanyEmployees.Extensions
         public static void ConfigureRepositoryManager(this IServiceCollection services) =>
             services.AddScoped<IRepositoryManager, RepositoryManager>();
 
+        public static void ConfigureServiceManager(this IServiceCollection services) =>
+            services.AddScoped<IServiceManager, ServiceManager>();
+
         public static void ConfigureSqlContext(this IServiceCollection services, IConfiguration configuration) =>
             services.AddDbContext<RepositoryContext>(opts => opts.UseSqlServer(configuration.GetConnectionString("sqlConnection")));
+
+        /*
+         This method replaces both AddDbContext and UseSqlServer methods 
+         and allows an easier configuration. But it doesn’t provide all of the 
+        features the AddDbContext method provides. So for more advanced 
+        options, it is recommended to use AddDbContext.
+         */
+        #region AddSqlServer
+        //public static void ConfigureSqlContext(this IServiceCollection services,
+        //IConfiguration configuration) =>
+        //services.AddSqlServer<RepositoryContext>((configuration.GetConnectionString("sqlConnection")));
+        #endregion
     }
 }
