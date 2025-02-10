@@ -18,6 +18,8 @@ FullAddress property as we specified in the MappingProfile class*/
             CreateMap<Company, CompanyDto>()
                 .ForCtorParam("FullAddress", 
                 opt => opt.MapFrom(x=>string.Join(' ', x.Address, x.Country)));
+
+            CreateMap<Employee, EmployeeDto>();
         }
     }
 }
