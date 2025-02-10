@@ -15,9 +15,12 @@ constructor that AutoMapper needs to map to
              This happens because AutoMapper is not able to find the specific 
 FullAddress property as we specified in the MappingProfile class*/
 
+            //CreateMap<Company, CompanyDto>()
+            //    .ForCtorParam("FullAddress", 
+            //    opt => opt.MapFrom(x=>string.Join(' ', x.Address, x.Country)));
             CreateMap<Company, CompanyDto>()
-                .ForCtorParam("FullAddress", 
-                opt => opt.MapFrom(x=>string.Join(' ', x.Address, x.Country)));
+                .ForMember(c=>c.FullAddress, 
+                opt=> opt.MapFrom(x=>string.Join(' ', x.Address, x.Country)));
 
             CreateMap<Employee, EmployeeDto>();
         }
