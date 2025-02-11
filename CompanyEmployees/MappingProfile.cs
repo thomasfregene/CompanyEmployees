@@ -22,6 +22,8 @@ FullAddress property as we specified in the MappingProfile class*/
                 .ForMember(c=>c.FullAddress, 
                 opt=> opt.MapFrom(x=>string.Join(' ', x.Address, x.Country)));
 
+            CreateMap<Company, CompanyForCreationDto>().ReverseMap();
+
             CreateMap<Employee, EmployeeDto>();
         }
     }
