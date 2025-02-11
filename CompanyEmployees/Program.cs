@@ -20,6 +20,7 @@ builder.Services.ConfigureSqlContext(builder.Configuration);
 /*With this, we are suppressing a default model state validation that is 
 implemented due to the existence of the [ApiController] attribute in 
 all API controllers*/
+
 builder.Services.Configure<ApiBehaviorOptions>(options =>
 {
     options.SuppressModelStateInvalidFilter = true;
