@@ -40,15 +40,29 @@ namespace Service
             return employeeToReturn;
         }
 
+        public void DeleteEmployeeForCompany(Guid companyId, Guid id, bool trackChanges)
+        {
+            var company = _repository.CompanyRepository.GetCompany(companyId, trackChanges);
+            if (company == null)
+                throw new CompanyNotFoundException(companyId);
+
+            var employeeForCompany = _repository.EmployeeRepository.GetEmployee(companyId, id, trackChanges);
+            if(employeeForCompany == null)
+                throw new EmployeeNotFoundException(id);
+
+            _repository.EmployeeRepository.DeleteEmployee(employeeForCompany);
+            _repository.Save();
+        }
+
         public EmployeeDto GetEmployee(Guid companyId, Guid employeeId, bool trackChanges)
         {
             var company = _repository.CompanyRepository.GetCompany(companyId, false);
 
-            if (company == null) 
+            if (company is null) 
                 throw new CompanyNotFoundException(companyId);
             var employeeDb = _repository.EmployeeRepository.GetEmployee(companyId, employeeId, trackChanges);
 
-            if(employeeDb == null)
+            if(employeeDb is null)
                 throw new EmployeeNotFoundException(employeeId);
 
             var employee = _mapper.Map<EmployeeDto>(employeeDb);
