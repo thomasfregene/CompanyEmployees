@@ -1,4 +1,5 @@
 using CompanyEmployees.Extensions;
+using CompanyEmployees.Presentation.ActionFilters;
 using Contracts;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Mvc;
@@ -16,6 +17,8 @@ builder.Services.ConfigureIISIntegration();
 builder.Services.ConfigureLoggerSevice();
 builder.Services.ConfigureRepositoryManager();
 builder.Services.ConfigureServiceManager();
+
+builder.Services.AddScoped<ValidationFilterAttribute>();
 
 builder.Services.ConfigureSqlContext(builder.Configuration);
 

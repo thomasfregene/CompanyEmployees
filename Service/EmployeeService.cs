@@ -22,9 +22,7 @@ namespace Service
 
         public async Task<EmployeeDto> CreateEmployeeForCompanyAsync(Guid companyId, EmployeeForCreationDto employeeForCreation, bool trackChanges)
         {
-            var company = await _repository.CompanyRepository.GetCompanyAsync(companyId, false);
-            if (company == null)
-                throw new CompanyNotFoundException(companyId);
+            await CheckIfCompanyExists(companyId, trackChanges);
 
             var employeeEntity = _mapper.Map<Employee>(employeeForCreation);
             _repository.EmployeeRepository.CreateEmployeeForCompany(companyId, employeeEntity);
@@ -37,9 +35,7 @@ namespace Service
 
         public async Task DeleteEmployeeForCompanyAsync(Guid companyId, Guid id, bool trackChanges)
         {
-            var company = await _repository.CompanyRepository.GetCompanyAsync(companyId, trackChanges);
-            if (company == null)
-                throw new CompanyNotFoundException(companyId);
+            await CheckIfCompanyExists(companyId, trackChanges);
 
             var employeeForCompany = await _repository.EmployeeRepository.GetEmployeeAsync(companyId, id, trackChanges);
             if(employeeForCompany == null)
@@ -51,10 +47,8 @@ namespace Service
 
         public async Task<EmployeeDto> GetEmployeeAsync(Guid companyId, Guid employeeId, bool trackChanges)
         {
-            var company = await _repository.CompanyRepository.GetCompanyAsync(companyId, false);
+            await CheckIfCompanyExists(companyId, trackChanges);
 
-            if (company is null) 
-                throw new CompanyNotFoundException(companyId);
             var employeeDb = await _repository.EmployeeRepository.GetEmployeeAsync(companyId, employeeId, trackChanges);
 
             if(employeeDb is null)
@@ -66,9 +60,7 @@ namespace Service
 
         public async Task<IEnumerable<EmployeeDto>> GetEmployeesAsync(Guid companyId, bool trackChanges)
         {
-            var company = await _repository.CompanyRepository.GetCompanyAsync(companyId, trackChanges);
-            if(company is null)
-                throw new CompanyNotFoundException(companyId);
+            await CheckIfCompanyExists(companyId, trackChanges);
 
             var employeeFromDb = await _repository.EmployeeRepository.GetEmployeesAsync(companyId, trackChanges);
 
@@ -80,9 +72,7 @@ namespace Service
         public async Task<(EmployeeForUpdateDto employeeToPatch, Employee employeeEntity)> GetEmployeeForPatchAsync
            (Guid companyId, Guid id, bool compTrackChange, bool empTrackChage)
         {
-            var company = await _repository.CompanyRepository.GetCompanyAsync(companyId, false);
-            if (company is null)
-                throw new CompanyNotFoundException(companyId);
+            await CheckIfCompanyExists(companyId, compTrackChange);
 
             var employeeEntity = await _repository.EmployeeRepository.GetEmployeeAsync(companyId, id, empTrackChage);
             if (employeeEntity is null)
@@ -102,9 +92,7 @@ namespace Service
         public async Task UpdateEmployeeForCompanyAsync(Guid companyId, Guid id, EmployeeForUpdateDto employeeForUpdate, 
             bool compTrackChanges, bool empTrackChanges)
         {
-            var company = await _repository.CompanyRepository.GetCompanyAsync(companyId, compTrackChanges);
-            if (company is null)
-                throw new CompanyNotFoundException(companyId);
+            await CheckIfCompanyExists(companyId, compTrackChanges);
 
             var employeeEntity = await _repository.EmployeeRepository.GetEmployeeAsync(companyId, id, empTrackChanges);
             if(employeeEntity is null)
@@ -112,6 +100,13 @@ namespace Service
 
             _mapper.Map(employeeForUpdate, employeeEntity);
             await _repository.SaveAsync();
+        }
+
+        private async Task CheckIfCompanyExists(Guid compayId, bool trackChanges)
+        {
+            var company = await _repository.CompanyRepository.GetCompanyAsync(compayId, trackChanges);
+            if(company is null)
+                throw new CompanyNotFoundException(compayId);
         }
     }
 }
