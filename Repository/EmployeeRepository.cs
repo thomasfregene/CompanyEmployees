@@ -1,6 +1,7 @@
 ﻿using Contracts;
 using Entities.Models;
 using Microsoft.EntityFrameworkCore;
+using Shared.RequestFeatures;
 
 namespace Repository
 {
@@ -20,9 +21,23 @@ namespace Repository
         public async Task<Employee> GetEmployeeAsync(Guid companyId, Guid employeeId, bool trackChanges) =>
             await FindByCondition(e=>e.CompanyId.Equals(companyId) && e.Id.Equals(employeeId), trackChanges).SingleOrDefaultAsync();
 
-        public async Task<IEnumerable<Employee>> GetEmployeesAsync(Guid companyId, bool trackChange) => 
-            await FindByCondition(e=>e.CompanyId.Equals(companyId),trackChange)
-            .OrderBy(e=>e.Name).ToListAsync();
+        public async Task<PageList<Employee>> GetEmployeesAsync(Guid companyId, EmployeeParameters employeeParameters, bool trackChange)
+        {
+            /* var employees = await FindByCondition(e => e.CompanyId.Equals(companyId), trackChange)
+             .OrderBy(e => e.Name)
+             .ToListAsync();*/
+            var employees = await FindByCondition(e => e.CompanyId.Equals(companyId), trackChange)
+             .OrderBy(e => e.Name)
+             .Skip((employeeParameters.PageNumber - 1) * employeeParameters.PageSize)
+             .Take(employeeParameters.PageSize)
+             .ToListAsync();
+
+            var count = await FindByCondition(e=>e.CompanyId.Equals(companyId), trackChange).CountAsync();
+
+            //return PageList<Employee>.ToPageList(employees, employeeParameters.PageNumber, employeeParameters.PageSize);
+            return new PageList<Employee>(employees, count, employeeParameters.PageNumber, employeeParameters.PageSize);
+        }
+             
 
         public void DeleteEmployee(Employee employee) => Delete(employee);
     }

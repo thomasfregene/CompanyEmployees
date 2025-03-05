@@ -4,6 +4,7 @@ using Entities.Exceptions;
 using Entities.Models;
 using Service.Contracts;
 using Shared.DataTransferObjects;
+using Shared.RequestFeatures;
 
 namespace Service
 {
@@ -58,15 +59,16 @@ namespace Service
             return employee;
         }
 
-        public async Task<IEnumerable<EmployeeDto>> GetEmployeesAsync(Guid companyId, bool trackChanges)
+        public async Task<(IEnumerable<EmployeeDto> employees, MetaData metaData)> GetEmployeesAsync
+            (Guid companyId, EmployeeParameters employeeParameters, bool trackChanges)
         {
             await CheckIfCompanyExists(companyId, trackChanges);
 
-            var employeeFromDb = await _repository.EmployeeRepository.GetEmployeesAsync(companyId, trackChanges);
+            var employeeWithMetaData = await _repository.EmployeeRepository.GetEmployeesAsync(companyId, employeeParameters, trackChanges);
 
-            var employeeDto = _mapper.Map<IEnumerable<EmployeeDto>>(employeeFromDb);
+            var employeeDto = _mapper.Map<IEnumerable<EmployeeDto>>(employeeWithMetaData);
 
-            return employeeDto;
+            return (employees: employeeDto, metaData: employeeWithMetaData.MetaData);
         }
 
         public async Task<(EmployeeForUpdateDto employeeToPatch, Employee employeeEntity)> GetEmployeeForPatchAsync

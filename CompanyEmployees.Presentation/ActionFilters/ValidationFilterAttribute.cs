@@ -28,7 +28,7 @@ namespace CompanyEmployees.Presentation.ActionFilters
 
         public void OnActionExecuted(ActionExecutedContext context)
         {
-            throw new NotImplementedException();
+            
         }
 
 
