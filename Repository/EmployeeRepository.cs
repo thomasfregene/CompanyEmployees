@@ -28,16 +28,7 @@ namespace Repository
                 .FilterEmployees(employeeParameters.MinAge, employeeParameters.MaxAge)
                 .Search(employeeParameters.SearchTerm)
                 .Sort(employeeParameters.OrderBy)
-            //.OrderBy(e => e.Name)
             .ToListAsync();
-
-            /*var employees = await FindByCondition(e => e.CompanyId.Equals(companyId), trackChange)
-             .OrderBy(e => e.Name)
-             .Skip((employeeParameters.PageNumber - 1) * employeeParameters.PageSize)
-             .Take(employeeParameters.PageSize)
-             .ToListAsync();*/
-
-            //var count = await FindByCondition(e => e.CompanyId.Equals(companyId), trackChange).CountAsync();
 
             return PageList<Employee>.ToPageList(employees, employeeParameters.PageNumber, employeeParameters.PageSize);
             //return new PageList<Employee>(employees, count, employeeParameters.PageNumber, employeeParameters.PageSize);

@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System.Dynamic;
+using AutoMapper;
 using Contracts;
 using Entities.Exceptions;
 using Entities.Models;
@@ -13,12 +14,14 @@ namespace Service
         private readonly IRepositoryManager _repository;
         private readonly ILoggerManager _logger;
         private readonly IMapper _mapper;
+        private readonly IDataShaper<EmployeeDto> _dataShaper;
 
-        public EmployeeService(IRepositoryManager repository, ILoggerManager logger, IMapper mapper)
+        public EmployeeService(IRepositoryManager repository, ILoggerManager logger, IMapper mapper, IDataShaper<EmployeeDto> dataShaper)
         {
             _repository = repository;
             _logger = logger;
             _mapper = mapper;
+            _dataShaper = dataShaper;
         }
 
         public async Task<EmployeeDto> CreateEmployeeForCompanyAsync(Guid companyId, EmployeeForCreationDto employeeForCreation, bool trackChanges)
@@ -59,7 +62,7 @@ namespace Service
             return employee;
         }
 
-        public async Task<(IEnumerable<EmployeeDto> employees, MetaData metaData)> GetEmployeesAsync
+        public async Task<(IEnumerable<Entity> employees, MetaData metaData)> GetEmployeesAsync
             (Guid companyId, EmployeeParameters employeeParameters, bool trackChanges)
         {
             if (!employeeParameters.ValidAgeRange)
@@ -70,8 +73,9 @@ namespace Service
             var employeeWithMetaData = await _repository.EmployeeRepository.GetEmployeesAsync(companyId, employeeParameters, trackChanges);
 
             var employeeDto = _mapper.Map<IEnumerable<EmployeeDto>>(employeeWithMetaData);
+            var shapedData = _dataShaper.ShapeData(employeeDto, employeeParameters.Fields);
 
-            return (employees: employeeDto, metaData: employeeWithMetaData.MetaData);
+            return (employees: shapedData, metaData: employeeWithMetaData.MetaData);
         }
 
         public async Task<(EmployeeForUpdateDto employeeToPatch, Employee employeeEntity)> GetEmployeeForPatchAsync
