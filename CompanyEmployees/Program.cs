@@ -1,5 +1,6 @@
 using CompanyEmployees.Extensions;
 using CompanyEmployees.Presentation.ActionFilters;
+using CompanyEmployees.Utility;
 using Contracts;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Mvc;
@@ -22,7 +23,11 @@ builder.Services.ConfigureServiceManager();
 
 builder.Services.AddScoped<ValidationFilterAttribute>();
 builder.Services.AddScoped<IDataShaper<EmployeeDto>, DataShaper<EmployeeDto>>();
+builder.Services.AddScoped<ValidateMediaTypeAttribute>();
 
+builder.Services.AddScoped<IEmployeeLinks, EmployeeLinks>();
+
+builder.Services.AddCustomMediaTypes();
 builder.Services.ConfigureSqlContext(builder.Configuration);
 
 /*With this, we are suppressing a default model state validation that is 
@@ -42,6 +47,8 @@ builder.Services.AddControllers(config =>
 }).AddXmlDataContractSerializerFormatters()
  .AddCustomCsvFormatter()
 .AddApplicationPart(typeof(CompanyEmployees.Presentation.AssemblyReference).Assembly);
+
+builder.Services.AddCustomMediaTypes();
 
 builder.Services.AddAutoMapper(typeof(Program));
 
