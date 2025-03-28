@@ -29,6 +29,7 @@ builder.Services.AddScoped<IEmployeeLinks, EmployeeLinks>();
 
 builder.Services.AddCustomMediaTypes();
 builder.Services.ConfigureSqlContext(builder.Configuration);
+builder.Services.ConfigureVersioning();
 
 /*With this, we are suppressing a default model state validation that is 
 implemented due to the existence of the [ApiController] attribute in 
