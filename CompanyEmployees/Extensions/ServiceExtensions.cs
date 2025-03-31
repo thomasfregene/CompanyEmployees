@@ -83,6 +83,19 @@ namespace CompanyEmployees.Extensions
             });
         }
 
+
+        public static void ConfigureResponseCaching(this IServiceCollection services) =>
+            services.AddResponseCaching();
+
+        public static void ConfigureHttpCacheHeaders(this IServiceCollection services) =>
+            services.AddHttpCacheHeaders((expirationOpt) =>
+            {
+                expirationOpt.MaxAge = 65;
+                expirationOpt.CacheLocation = Marvin.Cache.Headers.CacheLocation.Private;
+            }, (validateOpt) =>
+            {
+                validateOpt.MustRevalidate = true;
+            });
         public static void ConfigureSqlContext(this IServiceCollection services, IConfiguration configuration) =>
             services.AddDbContext<RepositoryContext>(opts => opts.UseSqlServer(configuration.GetConnectionString("sqlConnection")));
 

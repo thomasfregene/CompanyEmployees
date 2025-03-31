@@ -30,6 +30,8 @@ builder.Services.AddScoped<IEmployeeLinks, EmployeeLinks>();
 builder.Services.AddCustomMediaTypes();
 builder.Services.ConfigureSqlContext(builder.Configuration);
 builder.Services.ConfigureVersioning();
+builder.Services.ConfigureResponseCaching();
+builder.Services.ConfigureHttpCacheHeaders();
 
 /*With this, we are suppressing a default model state validation that is 
 implemented due to the existence of the [ApiController] attribute in 
@@ -45,6 +47,7 @@ builder.Services.AddControllers(config =>
     config.RespectBrowserAcceptHeader = true;
     config.ReturnHttpNotAcceptable = true;
     config.InputFormatters.Insert(0, GetJsonPatchInputFormatter());
+    config.CacheProfiles.Add("120SecondsDuration", new CacheProfile { Duration = 120 });
 }).AddXmlDataContractSerializerFormatters()
  .AddCustomCsvFormatter()
 .AddApplicationPart(typeof(CompanyEmployees.Presentation.AssemblyReference).Assembly);
@@ -86,6 +89,8 @@ app.UseForwardedHeaders(new ForwardedHeadersOptions
 });
 
 app.UseCors("CorsPolicy");
+app.UseResponseCaching();
+app.UseHttpCacheHeaders();
 
 app.UseAuthorization();
 
