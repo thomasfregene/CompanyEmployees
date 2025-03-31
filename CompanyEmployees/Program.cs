@@ -1,3 +1,4 @@
+using AspNetCoreRateLimit;
 using CompanyEmployees.Extensions;
 using CompanyEmployees.Presentation.ActionFilters;
 using CompanyEmployees.Utility;
@@ -55,6 +56,9 @@ builder.Services.AddControllers(config =>
 builder.Services.AddCustomMediaTypes();
 
 builder.Services.AddAutoMapper(typeof(Program));
+builder.Services.AddMemoryCache();
+builder.Services.ConfigureRateLimitingOptions();
+builder.Services.AddHttpContextAccessor();
 
 /*This function configures support for JSON Patch using 
 Newtonsoft.Json while leaving the other formatters unchanged*/
@@ -87,6 +91,8 @@ app.UseForwardedHeaders(new ForwardedHeadersOptions
 {
     ForwardedHeaders = ForwardedHeaders.All
 });
+
+app.UseIpRateLimiting();
 
 app.UseCors("CorsPolicy");
 app.UseResponseCaching();
