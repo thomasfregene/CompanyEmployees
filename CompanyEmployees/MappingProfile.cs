@@ -28,6 +28,8 @@ FullAddress property as we specified in the MappingProfile class*/
             CreateMap<Employee, EmployeeDto>();
             CreateMap<EmployeeForCreationDto, Employee>();
             CreateMap<EmployeeForUpdateDto, Employee>().ReverseMap();
+
+            CreateMap<UserForRegistrationRecordDto, User>();
         }
     }
 }
