@@ -33,6 +33,8 @@ builder.Services.ConfigureSqlContext(builder.Configuration);
 builder.Services.ConfigureVersioning();
 builder.Services.ConfigureResponseCaching();
 builder.Services.ConfigureHttpCacheHeaders();
+builder.Services.AddJwtConfiguration(builder.Configuration);
+builder.Services.ConfigureSwagger();
 
 /*With this, we are suppressing a default model state validation that is 
 implemented due to the existence of the [ApiController] attribute in 
@@ -86,6 +88,13 @@ if(app.Environment.IsProduction())
     app.UseDeveloperExceptionPage();
 else
     app.UseHsts();*/
+app.UseSwagger();
+app.UseSwaggerUI(s =>
+{
+    s.SwaggerEndpoint("/swagger/v1/swagger.json", "Code Maze API v1");
+    s.SwaggerEndpoint("/swagger/v2/swagger.json", "Code Maze API v2");
+});
+
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
